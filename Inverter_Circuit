@@ -1,0 +1,71 @@
+Design.v PART:
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 25.05.2025 13:14:33
+// Design Name: 
+// Module Name: Inv
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Inv(input ip,output op);
+not A1(op,ip);
+endmodule
+
+
+
+
+
+
+
+Testbench.v PART:
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 25.05.2025 13:13:30
+// Design Name: 
+// Module Name: Inv_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Inv_tb;
+reg IP;
+wire OP;
+Inv i1(IP,OP);
+initial begin
+IP=0;
+#10 IP=1;
+#10 IP=0;
+#10 IP=1;
+#10 IP=0; 
+#10 $stop;
+end
+endmodule
+
