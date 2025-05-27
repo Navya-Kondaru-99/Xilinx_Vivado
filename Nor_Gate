@@ -1,0 +1,68 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 27.05.2025 19:28:27
+// Design Name: 
+// Module Name: NOR
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module NOR(input A,input B,output OP);
+nor A1(OP,A,B);
+endmodule
+
+
+
+
+
+TESTBENCH.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 27.05.2025 19:50:20
+// Design Name: 
+// Module Name: NOR_Test
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module NOR_Test;
+reg a,b;
+wire op;
+NOR i1(a,b,op);
+initial begin
+a=0; b=0;
+#10 a=0; b=1;
+#10 a=1; b=0;
+#10 a=1; b=1;
+#10 $stop;
+end
+endmodule
