@@ -1,0 +1,77 @@
+Design part : 
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 02.06.2025 12:00:23
+// Design Name: 
+// Module Name: Full_adder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Full_adder(input A,input B,input Cin,output S,output Cout);
+wire w1,w2,we;
+HALF_ADD A1(A,B,w1,w2);
+HALF_ADD A2(w1,Cin,S,w3);
+or(Cout,w2,w3);
+endmodule
+
+
+
+Testbench Part: 
+
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 02.06.2025 12:06:02
+// Design Name: 
+// Module Name: Full_adder_TB
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Full_adder_TB;
+reg a,b,cin;
+wire s,c;
+Full_adder F1(a,b,cin,s,c);
+
+initial begin
+a=0;b=0;cin=0;
+#10 a=0;b=0;cin=1;
+#10 a=0;b=1;cin=0;
+#10 a=0;b=1;cin=1;
+#10 a=1;b=0;cin=0;
+#10 a=1;b=0;cin=1;
+#10 a=1;b=1;cin=0;
+#10 a=1;b=1;cin=1;
+
+#10 $stop;
+end 
+endmodule
