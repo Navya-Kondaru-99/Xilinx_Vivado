@@ -1,0 +1,77 @@
+Design Part :
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03.06.2025 17:11:50
+// Design Name: 
+// Module Name: Encoder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Encoder(input [3:0] i,output reg [1:0] y);
+always@(*)
+begin
+case(i) 
+   4'b0001: y=2'b00;
+   4'b0010: y=2'b01;
+   4'b0100: y=2'b10;
+   4'b1000: y=2'b11;
+   default: $display("Invalid Value");
+endcase;
+end
+endmodule
+
+
+
+Testbench Part:
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03.06.2025 17:13:35
+// Design Name: 
+// Module Name: Encoder_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Encoder_tb;
+reg [3:0] i; 
+wire [1:0] y;
+Encoder E1(.i(i),.y(y)); 
+initial
+begin
+i=4'b0001;
+#10 i=4'b0010;
+#10 i=4'b0100;
+#10 i=4'b1000;
+#10 $stop;
+end
+endmodule
