@@ -1,0 +1,77 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04.06.2025 19:02:19
+// Design Name: 
+// Module Name: Decoder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Decoder(input [1:0] i,output reg [3:0] y);
+always@(*)
+begin
+case(i) 
+   2'b00: y=4'b0001;
+   2'b01: y=4'b0010;
+   2'b10: y=4'b0100;
+   2'b11: y=4'b1000;
+   default: $display("Invalid Value");
+endcase;
+end
+endmodule
+
+
+
+
+TESTBENCH.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04.06.2025 19:02:45
+// Design Name: 
+// Module Name: Decoder_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module Decoder_tb;
+reg [1:0] i; 
+wire [3:0] y;
+Decoder E1(.i(i),.y(y)); 
+initial
+begin
+i=2'b00;
+#10 i=2'b01;
+#10 i=2'b10;
+#10 i=2'b11;
+#10 $stop;
+end
+endmodule
