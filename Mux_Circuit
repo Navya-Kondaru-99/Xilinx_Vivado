@@ -1,0 +1,75 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05.06.2025 15:00:16
+// Design Name: 
+// Module Name: Mux
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module  Mux(in1, in2, select, out);
+input in1, in2, select;
+output out;
+assign out = select ? in2 : in1;
+endmodule
+
+
+
+TESTBENCH.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05.06.2025 15:01:02
+// Design Name: 
+// Module Name: Mux_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Mux_tb;
+reg in1, in2, select;
+wire out;
+
+// design under test 
+Mux M1(.in1(in1), .in2(in2), 
+            .select(select), .out(out));
+initial begin 
+in1=1'b0;in2=1'b0;select=1'b0; 
+#10    in1=1'b1;
+#10    select=1'b1;
+#10    in2=1'b1;
+#10    $stop();
+        end
+initial begin 
+$monitor( in1, in2, select, out);
+end
+endmodule 
