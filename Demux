@@ -1,0 +1,70 @@
+DESIGN.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06.06.2025 20:57:22
+// Design Name: 
+// Module Name: Demux
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Demux(
+  input sel,
+  input i,
+  output y0, y1);
+  
+  assign {y0,y1} = sel?{1'b0,i}: {i,1'b0};
+endmodule
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06.06.2025 20:58:35
+// Design Name: 
+// Module Name: Demux_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module Demux_tb;
+  reg sel, i;
+  wire y0, y1;
+  
+  Demux d1(sel, i, y0, y1);
+  initial begin
+    $monitor("sel = %h: i = %h --> y0 = %h, y1 = %h", sel, i, y0, y1);
+    sel=0; i=0; #10;
+    sel=0; i=1; #10;
+    sel=1; i=0; #10;
+    sel=1; i=1; #10;
+    $stop;
+  end
+endmodule
