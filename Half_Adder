@@ -1,0 +1,73 @@
+DESIGn.v
+
+  `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 07.06.2025 11:22:10
+// Design Name: 
+// Module Name: Half_Sub
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Half_Sub(
+    input a,
+    input b,
+    output diff,
+    output borr
+    );
+    assign diff = a^b;  
+    assign borr = ~a&b;
+endmodule
+
+
+  
+
+TESTBNCH.V
+
+  `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 07.06.2025 11:35:51
+// Design Name: 
+// Module Name: HALF_SUB_TEST
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module HALF_SUB_TEST;
+reg a,b; 
+wire diff, borr;
+Half_Sub HS(a,b,diff,borr);
+initial begin
+a=0; b=0;
+#10 a=0; b=1;
+#10 a=1; b=0;
+#10 a=1; b=1;
+#10 $stop;  
+end
+endmodule
