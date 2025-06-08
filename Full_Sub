@@ -1,0 +1,71 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 08.06.2025 13:48:10
+// Design Name: 
+// Module Name: Full_sub
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Full_sub(input a,input b,input c,output diff,output borr);
+assign diff = a^b^c;  
+assign borr = ~a&b|~b&c|~a&c;
+endmodule
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 08.06.2025 13:48:58
+// Design Name: 
+// Module Name: Full_sub_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Full_sub_tb;
+reg a,b,c;
+wire diff,borr;
+Full_sub F1(a,b,c,diff,borr);
+
+initial begin
+a=0;b=0;c=0;
+#10 a=0;b=0;c=1;
+#10 a=0;b=1;c=0;
+#10 a=0;b=1;c=1;
+#10 a=1;b=0;c=0;
+#10 a=1;b=0;c=1;
+#10 a=1;b=1;c=0;
+#10 a=1;b=1;c=1;
+
+#10 $stop;
+end 
+endmodule
