@@ -1,0 +1,86 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09.06.2025 14:41:05
+// Design Name: 
+// Module Name: binary_full_adder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+module binary_full_adder(A,B,C0,S,C4);
+input[3:0] A,B;    
+input C0;
+output[3:0]S;
+output C4;
+wire C1,C2,C3;
+full_adder fa0(A[0],B[0],C0,S[0],C1);
+full_adder fa1(A[1],B[1],C1,S[1],C2);
+full_adder fa2(A[2],B[2],C2,S[2],C3);
+full_adder fa3(A[3],B[3],C3,S[3],C4);
+endmodule 
+
+module full_adder(A,B,Ci,S,Co);
+input A,B,Ci;   
+output S,Co;
+assign S=A^B^Ci;
+assign Co=(A&B) | (Ci&(A^B));   
+endmodule
+
+
+
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09.06.2025 14:42:50
+// Design Name: 
+// Module Name: binary_adder_test
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+module binary_adder_test;
+reg[3:0] A;
+reg[3:0] B; 
+reg C0;
+wire[3:0]S;
+wire C4;
+binary_full_adder B1(A,B,C0,S,C4);
+initial begin
+A=4'b0011;
+B=4'b0011;
+C0=1'b0;
+#10 A=4'b1011; B=4'b0111; C0=1'b0;
+#10 A=4'b1111; B=4'b1111; C0=1'b0;
+#10 $stop;
+end
+endmodule
+
