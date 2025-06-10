@@ -1,0 +1,76 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 10.06.2025 09:14:11
+// Design Name: 
+// Module Name: Prior_encoder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Prior_encoder(i,y);
+  input [3:0]i;
+  output reg [1:0]y;
+  always @(i)
+  begin
+
+        if(i[3]==1) y=2'b11;
+        else if(i[2]==1) y=2'b10;
+        else if(i[1]==1) y=2'b01;
+        else if(i[0]==1) y=2'b00;
+        else y=2'bzz;
+  end
+endmodule
+
+
+testbench.v
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 10.06.2025 09:55:27
+// Design Name: 
+// Module Name: pr_encoder_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module pr_encoder_tb;
+  reg [3:0]i;
+  wire [1:0]y;
+  Prior_encoder dut(i,y);
+  initial begin
+  i=4'b0000;#5 
+  i=4'b0001;#5
+  i=4'b0010;#5
+  i=4'b0100;#5
+  i=4'b1000;#5
+      $stop;
+    end
+endmodule
