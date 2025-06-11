@@ -1,0 +1,76 @@
+DESIGN.V
+
+  `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11.06.2025 10:15:24
+// Design Name: 
+// Module Name: Comparator
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Comparator(input A,input B,output G,output L,output E);
+reg G,L,E;
+always @(A,B)
+begin
+     G = (~B&A);
+     L = (~A&B);
+     E = ~((~A&B)|(~B&A));
+    end
+
+endmodule
+
+  
+  TESTBENCH.V
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11.06.2025 10:19:52
+// Design Name: 
+// Module Name: Comparator_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Comparator_tb;
+
+reg a,b;
+wire g,l,e;
+
+Comparator c1(a,b,g,l,e);
+
+initial begin
+a=0; b=0;
+#10 a=0;b=1;
+#10 a=1;b=0;
+#10 a=1;b=1;
+#10 $stop;
+end 
+endmodule
+
+  
