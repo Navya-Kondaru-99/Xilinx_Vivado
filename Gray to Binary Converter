@@ -1,0 +1,90 @@
+Design Part : 
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 13.06.2025 10:27:55
+// Design Name: 
+// Module Name: G2B
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module G2B(input [3:0]G,output [3:0]B);
+
+assign B[3]=G[3];
+assign B[2]=G[2] ^ B[3];
+assign B[1]=G[1] ^ B[2];
+assign B[0]=G[0] ^ B[1];
+
+endmodule
+
+
+
+
+
+Testbench Part : 
+
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 13.06.2025 10:34:10
+// Design Name: 
+// Module Name: G2Btb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module G2Btb;
+reg [3:0]G; wire [3:0]B;
+
+G2B g1(G,B);
+
+initial begin 
+
+G=0;
+#10 G=1;
+#10 G=3;
+#10 G=2;
+#10 G=6;
+#10 G=7;
+#10 G=5;
+#10 G=4;
+#10 G=12;
+#10 G=13;
+#10 G=15;
+#10 G=14;
+#10 G=10;
+#10 G=11;
+#10 G=9;
+#10 G=8;
+#10 $stop;
+end
+endmodule
