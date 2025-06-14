@@ -1,0 +1,83 @@
+DESIGN.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 14.06.2025 15:01:41
+// Design Name: 
+// Module Name: ParityChacker_test
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ParityChacker_test;
+reg [3:0] in1;
+wire even_out1,odd_out1;
+ParityChecker M(in1,even_out1,odd_out1);
+initial
+begin
+in1=4'b1100;
+#10 in1=4'b0110;
+#10 in1=4'b1101;
+#10 in1=4'b1010;
+#10 in1=4'b0101;
+#10 in1=4'b1110;
+#10 $stop;
+end
+endmodule
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 14.06.2025 15:00:10
+// Design Name: 
+// Module Name: ParityChecker
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module ParityChecker(in1,even_out1,odd_out1);
+input [3:0] in1;
+output reg even_out1,odd_out1;
+reg temp;
+always@(in1)
+begin
+temp = ^in1;
+if(temp)
+begin
+even_out1<=1'b0;
+odd_out1<=1'b1;
+end
+else
+begin
+even_out1<=1'b1;
+odd_out1<=1'b0;
+end
+end
+endmodule
