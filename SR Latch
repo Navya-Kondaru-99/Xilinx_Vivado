@@ -1,0 +1,75 @@
+Design Part : 
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 10:35:44
+// Design Name: 
+// Module Name: SR Latch
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module SR_Latch(input S,input R,output Q,output Q_bar);
+
+assign Q = ~(R | Q_bar);
+assign Q_bar = ~(S | Q  );
+endmodule
+
+
+
+
+Test Bench : 
+
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 10:39:34
+// Design Name: 
+// Module Name: SR_Latch_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module SR_Latch_tb;
+wire Q,Q_bar;
+reg S,R;
+
+SR_Latch S1(S,R,Q,Q_bar);
+
+initial begin
+S=0;R=0;
+#10 S=0;R=1;
+#10 S=1;R=0;
+#10 S=1;R=1;
+#10 $stop;
+end
+
+endmodule
