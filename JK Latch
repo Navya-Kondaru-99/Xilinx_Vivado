@@ -1,0 +1,104 @@
+Design Part : 
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 11:18:33
+// Design Name: 
+// Module Name: JK_Latch
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module JK_Latch (
+    input J,
+    input K,
+    input clk,     // Clock acts as Enable in latch
+    output reg Q,
+    output Q_bar
+);
+    assign Q_bar = ~Q;
+
+    always @(posedge clk) begin
+        case ({J, K})
+            2'b00: Q <= Q;          // No change
+            2'b01: Q <= 1'b0;       // Reset
+            2'b10: Q <= 1'b1;       // Set
+            2'b11: Q <= ~Q;         // Toggle
+        endcase
+    end
+endmodule
+
+
+
+
+
+
+Testbench Part : 
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 11:27:46
+// Design Name: 
+// Module Name: JK_Latch_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module JK_Latch_tb;
+    reg J, K, clk;
+    wire Q, Q_bar;
+
+    // Instantiate the JK Latch
+    JK_Latch uut (
+        .J(J),
+        .K(K),
+        .clk(clk),
+        .Q(Q),
+        .Q_bar(Q_bar)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // Toggle clk every 5 time units
+    end
+
+    // Stimulus
+    initial begin
+        $monitor("Time=%0t | J=%b K=%b | Q=%b Q_bar=%b", $time, J, K, Q, Q_bar);
+
+        // Test Cases
+        J = 0; K = 0; #10; // No change
+        J = 0; K = 1; #10; // Reset
+        J = 1; K = 0; #10; // Set
+        J = 1; K = 1; #10; // Toggle
+        J = 0; K = 0; #10; // No change
+        $finish;
+    end
+endmodule
