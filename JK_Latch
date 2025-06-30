@@ -1,0 +1,150 @@
+DESIGN.V
+
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 11:18:33
+// Design Name: 
+// Module Name: JK_Latch
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+// Filename: jk_latch.v
+// Description: Positive-edge triggered JK latch with asynchronous reset
+
+module JK_Latch (
+    input wire J,      // J input
+    input wire K,      // K input
+    input wire clk,    // Clock (positive edge-triggered)
+    input wire rst,    // Asynchronous reset (active high)
+    output reg Q,      // Output Q
+    output wire Qn     // Complement output (~Q)
+);
+
+// Main JK latch logic
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        Q <= 1'b0;     // Reset condition (overrides J/K)
+    end
+    else begin
+        case ({J, K})
+            2'b00: Q <= Q;     // Hold state
+            2'b01: Q <= 1'b0;  // Reset (K=1)
+            2'b10: Q <= 1'b1;  // Set (J=1)
+            2'b11: Q <= ~Q;    // Toggle (J=K=1)
+        endcase
+    end
+end
+
+assign Qn = ~Q;  // Generate complement output
+
+endmodule
+
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.06.2025 11:27:46
+// Design Name: 
+// Module Name: JK_Latch_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+// Filename: tb_jk_latch.v
+// Description: Testbench to verify JK latch functionality
+
+`timescale 1ns/1ps
+
+module JK_Latch_tb;
+
+    // Inputs (driven by testbench)
+    reg J;
+    reg K;
+    reg clk;
+    reg rst;
+
+    // Outputs (monitored)
+    wire Q;
+    wire Qn;
+
+    // Instantiate the JK latch
+    JK_Latch uut (
+        .J(J),
+        .K(K),
+        .clk(clk),
+        .rst(rst),
+        .Q(Q),
+        .Qn(Qn)
+    );
+
+    // Clock generation (10ns period, 50% duty cycle)
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    // Stimulus generator
+    initial begin
+        // Initialize inputs
+        J = 0;
+        K = 0;
+        rst = 1;  // Assert reset
+
+        // Release reset after 10ns
+        #10 rst = 0;
+
+        // Test sequence
+        #10 J=0; K=0;  // Hold
+        #10 J=1; K=0;  // Set
+        #10 J=0; K=1;  // Reset
+        #10 J=1; K=1;  // Toggle
+        #10 J=0; K=0;  // Hold
+        #10 rst=1;     // Test reset
+        #5  rst=0;
+        
+        // End simulation
+        #20 $finish;
+    end
+
+    // Monitor signals
+    initial begin
+        $monitor("Time=%0t: clk=%b rst=%b J=%b K=%b -> Q=%b Qn=%b",
+                 $time, clk, rst, J, K, Q, Qn);
+    end
+
+    // Generate waveform file (for GTKWave)
+    initial begin
+        $dumpfile("JK_Latch_tb.vcd");
+        $dumpvars(0, JK_Latch_tb);
+    end
+
+endmodule
