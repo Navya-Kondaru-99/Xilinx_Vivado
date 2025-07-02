@@ -1,0 +1,76 @@
+DESIGN.V
+
+module JK_Flip (
+    input J,
+    input K,
+    input clk,
+    input reset,
+    output reg Q,
+    output Q_bar
+);
+    assign Q_bar = ~Q;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            Q <= 1'b0;
+        else begin
+            case ({J, K})
+                2'b00: Q <= Q;        // No change
+                2'b01: Q <= 1'b0;     // Reset
+                2'b10: Q <= 1'b1;     // Set
+                2'b11: Q <= ~Q;       // Toggle
+            endcase
+        end
+    end
+endmodule
+
+
+
+
+
+
+TESTBENCH.V
+
+module JK_Flip_Test;
+
+    // Testbench signals
+    reg J, K, clk, reset;
+    wire Q, Q_bar;
+
+    // Instantiate the JK Flip-Flop
+    JK_Flip uut (
+        .J(J),
+        .K(K),
+        .clk(clk),
+        .reset(reset),
+        .Q(Q),
+        .Q_bar(Q_bar)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 10 time units clock period
+    end
+
+    // Test sequence
+    initial begin
+        // Monitor outputs
+        $monitor("Time=%0t | J=%b K=%b Reset=%b | Q=%b Q_bar=%b", 
+                 $time, J, K, reset, Q, Q_bar);
+
+        // Initialize inputs
+        reset = 1; J = 0; K = 0;
+        #10 reset = 0;
+
+        // Test all input combinations
+        #10 J = 0; K = 0; // No Change
+        #10 J = 0; K = 1; // Reset
+        #10 J = 1; K = 0; // Set
+        #10 J = 1; K = 1; // Toggle
+        #10 J = 0; K = 0; // No Change
+        #10 J = 1; K = 1; // Toggle
+        #10 $finish;
+    end
+
+endmodule
