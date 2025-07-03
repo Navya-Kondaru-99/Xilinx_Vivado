@@ -1,0 +1,107 @@
+DESIGN.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03.07.2025 11:43:25
+// Design Name: 
+// Module Name: D_Flip
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+// D Flip-Flop with Q and Qbar outputs
+module D_Flip (
+    input D,
+    input clk,
+    output reg Q,
+    output Qbar
+);
+
+assign Qbar = ~Q;
+
+always @(posedge clk) begin
+    Q <= D;
+end
+
+endmodule
+
+
+
+
+
+TESTBENCH.V
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03.07.2025 11:44:12
+// Design Name: 
+// Module Name: D_Flip_Test
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+module D_Flip_Test;
+
+reg D;
+reg clk;
+wire Q, Qbar;
+
+// Instantiate the D Flip-Flop
+D_Flip uut (
+    .D(D),
+    .clk(clk),
+    .Q(Q),
+    .Qbar(Qbar)
+);
+
+// Clock generation
+initial begin
+    clk = 1;
+    forever #5 clk = ~clk; // 10ns clock period
+end
+
+// Stimulus
+initial begin
+    // Monitor outputs
+    $monitor("Time=%0t | D=%b | clk=%b | Q=%b | Qbar=%b", $time, D, clk, Q, Qbar);
+
+    // Test sequence
+    D = 0; #10;
+    D = 1; #10;
+    D = 0; #10;
+    D = 1; #10;
+    D = 1; #10;
+    D = 0; #10;
+
+    $finish;
+end
+
+endmodule
