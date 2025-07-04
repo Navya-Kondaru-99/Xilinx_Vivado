@@ -1,0 +1,64 @@
+DESIGN.V
+
+module T_FF (
+    input clk,
+    input T,
+    output reg Q,
+    output Qbar
+);
+    assign Qbar = ~Q;
+
+    always @(posedge clk) begin
+        if (T)
+            Q <= ~T;  // Toggle
+        // else: no need to explicitly hold Q, it retains value
+        else 
+            Q<= T;
+    end
+endmodule
+
+
+
+TESTBENCH.V
+
+
+`timescale 1ns/1ps
+
+module T_FF_Test;
+
+    reg clk;
+    reg T;
+    wire Q, Qbar;
+
+    // Instantiate the T flip-flop
+    T_FF uut (
+        .clk(clk),
+        .T(T),
+        .Q(Q),
+        .Qbar(Qbar)
+    );
+
+    // Clock generation: 10ns period
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    // Stimulus
+    initial begin
+        $dumpfile("t_flipflop.vcd");
+        $dumpvars(0, T_FF_Test);
+        $monitor("Time=%0t | clk=%b | T=%b | Q=%b | Qbar=%b", $time, clk, T, Q, Qbar);
+
+        // Start test
+        T = 0; #10;  // Initial hold, Q = 0
+
+        T = 1; #10;  // Toggle at clk rising edge
+        T = 0; #10;  // Toggle again
+        T = 0; #10;  // Hold Q value
+        T = 1; #10;  // Toggle twice
+        T = 1; #10;  // Hold
+
+        $finish;
+    end
+endmodule
